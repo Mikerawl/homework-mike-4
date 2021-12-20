@@ -1,13 +1,77 @@
 var timerEl = document.getElementById('countdown');
-var mainEl = document.getElementById('main');
-
-// When I press the start button I begin the test and start the times
+var startQuiz = document.getElementById("start-quiz");
+var questionBank = document.getElementById("question-bank")
+var questionItem = document.getElementById("question-item")
+var answerTrue = document.getElementById("answer-true")
+var answerFalse = document.getElementById("answer-false")
+var welcome = document.getElementById("welcome")
+var questionNumber = 0; 
 var message ='Game Over';
-// var words = message.split(' ');
+var answerButton = document.querySelectorAll(".answer-button")
+var questions = [
+  {
+    question: "the main programing language of the internet is Java.", 
+    show: ["True", "False"],
+    answer: "0"
+
+  },
+  {
+    question: "HTML is an acronym for Hyper Text Mark-up Language.", 
+    show: ["True", "False"],
+    answer: "1"
+  },
+  {
+    question: "Responsive design allows web pages to be displayed on computer, phones, and tablets correctly.", 
+    show: ["True", "False"],
+    answer: "1"
+  },
+  {
+    question: "CSS is the Consolidated Style Section of a webpage.", 
+    show: ["True", "False"],
+    answer: "0"
+  },
+]
+var score = 0;
+// When I press the start button I begin the test and start the times
+
+
+// beginQuiz starts the quiz
+function beginQuiz() { 
+  welcome.style.display = "none";
+  questionBank.style.display = "block";
+  questionNumber = 0
+  countdown();
+  replaceQuestion(questionNumber)
+}
+
+ function replaceQuestion(id) { 
+  if (id < questions.length ) {
+    questionItem.textContent = questions[id].question;
+    answerTrue.textContent = questions[id].show[1] ;
+    answerFalse.textContent = questions[id].show[0];
+ }
+}
+
+  function checkAnswer(e) {
+    e.preventDefault();
+
+  if (questions[questionNumber].answer === e.target.value) {
+
+    
+console.log("score",)
+  }
+  
+  
+  }
+  
+
+
 
 // Timer that counts down from 5
 function countdown() {
-  var timeLeft = 5;
+
+  var timeLeft = 10;
+
 
   // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
   var timeInterval = setInterval(function () {
@@ -28,31 +92,23 @@ function countdown() {
       clearInterval(timeInterval);
       // Call the `displayMessage()` function
       alert("Game Over")
+    
     }
+
   }, 1000);
 }
 
-// // Displays the message one word at a time
-// function displayMessage() {
-//   var wordCount = 0;
+startQuiz.addEventListener("click", beginQuiz); 
+answerButton.forEach(item => {
+  item.addEventListener("click", checkAnswer );
 
-//   // Uses the `setInterval()` method to call a function to be executed every 1000 milliseconds
-//   var msgInterval = setInterval(function () {
-//     // If there are no more words left in the message
-//     if (words[wordCount] === undefined) {
-//       // Use `clearInterval()` to stop the timer
-//       clearInterval(msgInterval);
-//     } else {
-//       // Display one word of the message
-//       mainEl.textContent = words[wordCount];
-//       wordCount++;
-//     }
-    
-//   }, 1000);
-// }
+});
 
-countdown();
-// GIVEN I am taking a code quiz
+
+// // GIVEN I am taking a code quiz
+// // For Loop to show questions
+// for (var question ) < 1 < questionBank, !++
+
 
 // WHEN I answer a question
 // THEN I am presented with another question

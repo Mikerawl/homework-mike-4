@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -7,33 +8,46 @@
     <title>Mike's Homework #4</title>
     <link rel="stylesheet" href="./assets/style.css" />
 </head>
-<body>
-    <div>
-        <!-- this displays the do you want to start a test. -->
-        <h1>Do you want take</h1>
-    </div>
-    <!-- // WHEN I click the start button
-// THEN a timer starts and I am presented with a question -->
-    <div class="container">
-        <h1 class="welcome">Welcome to Speed Reader</h1>
-        <h2 id="countdown"></h2>
-        <p id="main"></p>
-      </div>
-      <script src="./assets/script.js"></script>
-    
-<!-- // GIVEN I am taking a code quiz -->
 
-<!-- // WHEN I answer a question
+<body>
+    <div class="container">
+        <Header>
+            <!-- this displays the do you want to start a test. -->
+            <h1>Mini Coding Quiz</h1>
+            <h3 id="countdown"></h3>
+        </header>
+        <!-- // WHEN I click the start button
+// THEN a timer starts and I am presented with a question -->
+        <section id="welcome">
+            <h2 class="welcome">Click 'Start' to Begin</h2>
+            <button id="start-quiz">Start</button>
+        </section>
+
+        <section id="question-bank">
+            <div id="question-item">here is a question</div>
+            <button class="answer-button" id="answer-true" value = "1">True</button>
+            <button class="answer-button" id="answer-false" value="0">False</button>
+        </section>
+
+
+
+        <!-- // GIVEN I am taking a code quiz -->
+
+        <!-- // WHEN I answer a question
 // THEN I am presented with another question -->
 
-<!-- // WHEN I answer a question incorrectly
+        <!-- // WHEN I answer a question incorrectly
 // THEN time is subtracted from the clock -->
 
-<!-- // WHEN all questions are answered or the timer reaches 0
+        <!-- // WHEN all questions are answered or the timer reaches 0
 // THEN the game is over -->
 
-<!-- // WHEN the game is over
+        <!-- // WHEN the game is over
 // THEN I can save my initials and my score -->
-    
+    </div>
+    <!-- closing container-->
+
+    <script src="./assets/script.js"></script>
 </body>
+
 </html>

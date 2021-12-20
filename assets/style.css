@@ -6,7 +6,13 @@
     height: 100px;
     text-align: center;
   }
-  
+  #welcome {
+    display: block;
+  }
+
+  #question-bank {
+    display: none;
+  }
   .welcome {
     margin-bottom: 20px;
   }

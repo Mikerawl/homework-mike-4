@@ -8,6 +8,13 @@ var welcome = document.getElementById("welcome");
 var questionNumber = 0;
 var message = "Game Over";
 var answerButton = document.querySelectorAll(".answer-button");
+var checkedAnswer = document.getElementById("checked-answer");
+var endGame = document.getElementById("end-game");
+var gameScore = document.getElementById("game-score");
+var timeInterval;
+var score = 0;
+var timeLeft = 45;
+
 var questions = [
   {
     question: "the main programing language of the internet is Java.",
@@ -15,7 +22,7 @@ var questions = [
     answer: "0",
   },
   {
-    question: "The currently preffered variables are 'let' and 'var'.",
+    question: "The currently preferred variables are 'let' and 'var'.",
     show: ["True", "False"],
     answer: "1",
   },
@@ -31,40 +38,48 @@ var questions = [
     answer: "0",
   },
 ];
+
 var score = 0;
-// When I press the start button I begin the test and start the time
 
 // beginQuiz starts the quiz
 function beginQuiz() {
   welcome.style.display = "none";
   questionBank.style.display = "block";
-  questionNumber = 0;
   countdown();
   replaceQuestion(questionNumber);
 }
 
-function replaceQuestion(id) {
-  if (id < questions.length) {
-    questionItem.textContent = questions[id].question;
-    answerTrue.textContent = questions[id].show[1];
-    answerFalse.textContent = questions[id].show[0];
+function replaceQuestion() {
+  if (questionNumber == questions.length) {
+    endQuiz();
+  } else {
+    questionItem.textContent = questions[questionNumber].question;
+    answerTrue.textContent = questions[questionNumber].show[1];
+    answerFalse.textContent = questions[questionNumber].show[0];
+    questionNumber++;
   }
 }
 
-function checkAnswer(e) {
-  e.preventDefault();
+function checkAnswer(event) {
+  event.preventDefault();
 
-  if (questions[questionNumber].answer === e.target.value) {
+  if (questions[questionNumber - 1].answer === event.target.value) {
     console.log("score");
+    checkedAnswer.textContent = "correct";
+  } else {
+    checkedAnswer.textContent = "incorrect";
+    timeLeft -= 10;
   }
+  checkedAnswer.setAttribute("style", "display:block");
+  setTimeout(function () {}, 2000);
+
+  replaceQuestion();
 }
 
-// Timer that counts down from 5
+// Timer that counts down from 45
 function countdown() {
-  var timeLeft = 10;
-
   // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-  var timeInterval = setInterval(function () {
+  timeInterval = setInterval(function () {
     // As long as the `timeLeft` is greater than 1
     if (timeLeft > 1) {
       // Set the `textContent` of `timerEl` to show the remaining seconds
@@ -80,29 +95,43 @@ function countdown() {
       timerEl.textContent = "";
       // Use `clearInterval()` to stop the timer
       clearInterval(timeInterval);
-      // Call the `displayMessage()` function
-      alert("Game Over");
     }
   }, 1000);
 }
 
+function endQuiz() {
+  score = timeLeft;
+  welcome.setAttribute("style", "display:none");
+  questionBank.setAttribute("style", "display:none");
+  endGame.setAttribute("style", "display:block");
+
+  gameScore.textContent = score;
+  clearInterval(timeInterval);
+}
+
+function savingScore() {
+  var scoreSubmit = document.getElementById("score-submit");
+
+  scoreSubmit.addEventListener("click", (event) => {
+    var initials = document.getElementById("initials").value.trim();
+
+    var addEntry = {
+      "initials": initials,
+      "score": score,
+    };
+
+    var SaveScore = JSON.parse(localStorage.getItem("player-scores"))|| [];
+    localStorage.setItem("addEntry", JSON.stringify(addEntry));
+    SaveScore.push(addEntry);
+    localStorage.setItem("player-scores", JSON.stringify(SaveScore));
+    
+  });
+}
+
+savingScore();
+
 startQuiz.addEventListener("click", beginQuiz);
+
 answerButton.forEach((item) => {
   item.addEventListener("click", checkAnswer);
 });
-
-// // GIVEN I am taking a code quiz
-// // For Loop to show questions
-// for (var question ) < 1 < questionBank, !++
-
-// WHEN I answer a question
-// THEN I am presented with another question
-
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-
-// WHEN the game is over
-// THEN I can save my initials and my score
